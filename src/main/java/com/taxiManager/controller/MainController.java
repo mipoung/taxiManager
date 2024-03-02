@@ -21,8 +21,8 @@ public class MainController {
 		
 		List<UserVO> list = mainService.mainList();
 		model.addAttribute("list", list);
-		
-		return "index";
+		System.out.println("메인페이지 실행");
+		return "index.html";
 	}
 	
 	
