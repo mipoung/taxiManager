@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <div layout:fragment="content">
+    		
+    		 <script th:inline="javascript">
+		        /*<![CDATA[*/
+		        $(document).ready(function() {
+		            $('#driveInserBtn').click(function() {
+		                // 서버로 데이터를 제출하기 전에 쉼표를 제거합니다.
+		                $('.won').each(function() {
+		                    $(this).val($(this).val().replace(/,/g, ''));
+		                });
+		
+		                // 폼 제출
+		                $('#driveInfoInsertFm').submit();
+		            });
+		
+		            $('.won').on('input', function() {
+		                // 입력된 값에서 숫자 이외의 문자 제거
+		                let value = $(this).val().replace(/\D/g, '');
+		
+		                // 세 자리마다 쉼표 추가
+		                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		
+		                // 입력 필드에 새로운 값 설정
+		                $(this).val(value);
+		            });
+		            
+		            $('input[name="nowKm"]').on('input', function() {
+		                // 입력된 값에서 숫자 이외의 문자 제거
+		                let value = $(this).val().replace(/\D/g, '');
+		                // 입력 필드에 새로운 값 설정
+		                $(this).val(value);
+		
+		            });
+		        });
+		        /*]]>*/
+		    </script>
+    
+		  <div class="card text-center">
+			  <div class="card-header">
+			    오늘 기록(2024년 3월 2일)
+			  </div>
+			  	<label for="nowKm" class="form-label fs-5 mt-2">아직 오늘 기록을 입력하지 않았습니다. <br>기록을 입력해보세요.</label>
+			 
+			  
+			  <form id="driveInfoInsertFm" method="post" action="/infoInsert">
+				  <div class="card-body">
+					   <div class="input-group flex-nowrap">
+						  	<span class="input-group-text subSpan" id="addon-wrapping">오늘 주행거리</span>
+							<input type="text" class="form-control" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="nowKm" id="nowKm">
+							<span class="input-group-text subSpanBt" id="addon-wrapping">Km</span>
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text subSpan" id="addon-wrapping">오늘 수입</span>
+						  <input type="text" class="form-control won" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="todayIncome">
+						  <span class="input-group-text subSpanBt" id="addon-wrapping">원</span>
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text subSpan" id="addon-wrapping">오늘 연료비</span>
+						  <input type="text" class="form-control won" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="todayFuel">
+						  <span class="input-group-text subSpanBt" id="addon-wrapping">원</span>
+						</div>
+					<!-- 	<div class="input-group flex-nowrap">
+						  <span class="input-group-text" id="addon-wrapping">차량번호</span>
+						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text" id="addon-wrapping">차량번호</span>
+						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+						</div> -->
+						
+						<div class="mb-3">
+						  <label for="exampleFormControlTextarea1" class="form-label fs-5 mt-5">메모</label>
+						  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="todayMemo"></textarea>
+						</div>
+				  </div>
+				  <div class="card-footer text-body-secondary">
+				    <button class="btn btn-primary" id="driveInserBtn">기록 저장</button>
+				  </div>
+			  </form>
+		</div>
+		
+		
+		
+		
+		
+		
+		  <div class="card text-center">
+			  <div class="card-header">
+			    오늘 기록(2024년 3월 2일)
+			  </div>
+			  <div class="container-sm">
+			  	<h5 class="mt-2">이미 입력된 오늘 운행 정보가 있습니다.</h5>
+			 
+			  </div>
+		  	  <div class="card-footer text-body-secondary">
+		  		  <button class="btn btn-primary" id="driveInserBtn">운행정보 수정</button>
+			      <button class="btn btn-primary" id="driveInserBtn">운행정보 조회</button>
+			  </div>
+		</div>
+		
+        
+        
+    </div>
+
+</html>
