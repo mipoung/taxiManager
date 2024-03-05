@@ -2,6 +2,7 @@ package com.taxiManager.vo;
 
 public class DriveInfoVO {
 	
+	String no;
 	String totalKm; // 총 주행거리
 	String nowKm; // 현재 주행거리
 	String todayIncome; // 오늘 수입
@@ -11,6 +12,12 @@ public class DriveInfoVO {
 	
 	
 	
+	public String getNo() {
+		return no;
+	}
+	public void setNo(String no) {
+		this.no = no;
+	}
 	public String getTotalKm() {
 		return totalKm;
 	}

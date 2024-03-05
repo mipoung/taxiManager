@@ -8,7 +8,8 @@ import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
 @Mapper
-public interface MainDAO {
-	List<UserVO> mainList();
-	
+public interface DriveInfoDAO {
+	int infoInsert(DriveInfoVO driveInfoVO);
+	int driveInfoChk();
+	List<UserVO> driveInfoList();
 }

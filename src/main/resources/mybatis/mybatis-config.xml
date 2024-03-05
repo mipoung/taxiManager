@@ -9,6 +9,7 @@
 	<!-- 별칭 지정 -->
   <typeAliases>
     <typeAlias alias="user" type="com.taxiManager.vo.UserVO"/>
+    <typeAlias alias="driveInfo" type="com.taxiManager.vo.DriveInfoVO"/>
   </typeAliases>
 
 	<!-- 데이터베이스 연결 설정 -->
@@ -28,5 +29,6 @@
 	<!-- 매퍼 위치 설정 -->
   <mappers>
     <mapper resource="mybatis/mapper/User.xml"/>
+    <mapper resource="mybatis/mapper/DriveInfo.xml"/>
   </mappers>
 </configuration>
