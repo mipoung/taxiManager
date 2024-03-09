@@ -10,5 +10,6 @@ import com.taxiManager.vo.UserVO;
 public interface MainService {
 	
 	List<UserVO> mainList();
-	
-}
+   String checkDuplicateId(String id);
+	}
+
