@@ -8,9 +8,10 @@ import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
 @Service
-public interface MainService {
+public interface DriveInfoService {
 	
-	List<UserVO> mainList();
-   String checkDuplicateId(String id);
-	}
+	int infoInsert(DriveInfoVO driveInfoVO);
+	int driveInfoChk();
+	List<UserVO> driveInfoList();
 
+}

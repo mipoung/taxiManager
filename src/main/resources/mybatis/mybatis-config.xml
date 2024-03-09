@@ -9,10 +9,18 @@
 	<!-- 별칭 지정 -->
   <typeAliases>
     <typeAlias alias="user" type="com.taxiManager.vo.UserVO"/>
+    <typeAlias alias="driveInfo" type="com.taxiManager.vo.DriveInfoVO"/>
   </typeAliases>
-
+  <!-- 매퍼 위치 설정 -->
+  <mappers>
+    <mapper resource="mybatis/mapper/User.xml"/>
+    <mapper resource="mybatis/mapper/DriveInfo.xml"/>
+  </mappers>
+  
+  
+  
 	<!-- 데이터베이스 연결 설정 -->
-  <environments default="development">
+<!--   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
@@ -23,10 +31,8 @@
       </dataSource>
     </environment>
   </environments>
+ -->
 
-
-	<!-- 매퍼 위치 설정 -->
-  <mappers>
-    <mapper resource="mybatis/mapper/User.xml"/>
-  </mappers>
+	
+  
 </configuration>
