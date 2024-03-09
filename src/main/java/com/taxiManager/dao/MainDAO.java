@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
 @Mapper
