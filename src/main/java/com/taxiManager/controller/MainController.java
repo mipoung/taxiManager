@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.taxiManager.service.MainService;
 import com.taxiManager.vo.DriveInfoVO;
@@ -26,11 +28,11 @@ public class MainController {
 		return "views/main/index.html";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/signIn")
 	public String mainLogin(Model model) {
 		
 		System.out.println("로그인 페이지 실행");
-		return "views/common/loginPage.html";
+		return "views/common/signIn.html";
 	}
 	
 	
@@ -70,4 +72,12 @@ public class MainController {
 		return "views/common/driveStatistics.html";
 	}
 	
+	@PostMapping("/check_duplicate_id")
+	@ResponseBody
+	public String checkId(@RequestParam("id") String id) {
+		System.out.println(id +"가져오기");
+		return mainService.checkDuplicateId(id);
+		
+	}
+
 }

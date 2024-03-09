@@ -8,6 +8,9 @@
     </select>
     <!-- 다른 SQL 문들도 추가할 수 있음 -->
     
-  
+    <select id="checkDuplicateId" resultType="String">
+        SELECT id FROM users WHERE id = #{id};
+    </select>
+    
 </mapper>
 
