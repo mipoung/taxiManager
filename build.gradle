@@ -33,8 +33,10 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     
     /* 스프링 시큐리티 */
-    
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     /* 롬복 */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
  
 	
 	
