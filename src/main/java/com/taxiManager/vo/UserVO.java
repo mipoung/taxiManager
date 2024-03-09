@@ -1,8 +1,8 @@
 package com.taxiManager.vo;
 
 public class UserVO {
-	private int id;
-    private String username;
+	private int no;
+    private String id;
     private String taxiNumber;
     private String email;
     private String operationShift;
@@ -15,8 +15,8 @@ public class UserVO {
     @Override
     public String toString() {
         return "UserVO{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "no=" + no +
+                ", id='" + id + '\'' +
                 ", taxiNumber='" + taxiNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", operationShift='" + operationShift + '\'' +
@@ -27,17 +27,17 @@ public class UserVO {
     }
     
     
-	public int getId() {
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	public String getTaxiNumber() {
 		return taxiNumber;
