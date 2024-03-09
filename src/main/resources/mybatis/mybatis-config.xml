@@ -27,7 +27,7 @@
         <property name="driver" value="org.mariadb.jdbc.Driver"/>
         <property name="url" value="jdbc:mariadb://localhost:3306/taxiManager"/>
         <property name="username" value="root"/>
-        <property name="password" value="4035"/>
+        <property name="password" value="a174682593"/>
       </dataSource>
     </environment>
   </environments>
