@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserVO {
-	private int id;
-    private String username;
+	private int no;
+    private String id;
     private String CarNumber;
     private String email;
     private String operationShift;
@@ -20,8 +20,8 @@ public class UserVO {
     @Override
     public String toString() {
         return "UserVO{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "no=" + no +
+                ", username='" + id + '\'' +
                 ", taxiNumber='" + CarNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", operationShift='" + operationShift + '\'' +
