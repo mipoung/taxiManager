@@ -42,5 +42,13 @@ public class MainController {
 		return "views/user/signUp.html";
 	}
 	
+	@PostMapping("/check_duplicate_id")
+	@ResponseBody
+	public String checkId(@RequestParam("id") String id) {
+		System.out.println(id +"가져오기");
+		return mainService.checkDuplicateId(id);
+		
+	}
+	
 	
 }
