@@ -5,20 +5,40 @@
 
 
   	<insert id="infoInsert">
-	    INSERT INTO DriveInfo (nowKm, todayIncome, todayFuel, todayMemo)
-	    VALUES (#{nowKm}, #{todayIncome}, #{todayFuel}, #{todayMemo})
+	    INSERT INTO DriveInfo (now_km, car_number,today_income, today_fuel, today_memo)
+	    VALUES (#{nowKm}, '인천13부1231', #{todayIncome}, #{todayFuel}, #{todayMemo})
 	</insert>
 	
 	<select id="driveInfoChk" resultType="int">
 		SELECT count(*) FROM driveInfo
-		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(registTime, '%Y-%m-%d')
+		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
 		
 	</select>
 
 	<select id="driveInfoList" resultType="driveInfo">
 		SELECT * from driveInfo
-		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(registTime, '%Y-%m-%d')
+		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
 	</select>
+	
+	<update id="infoUpdate">
+    	UPDATE driveInfo
+		SET total_Km = #{totalKm}, now_km = #{nowKm}, today_fuel = #{todayFuel}, today_memo = #{todayMemo}
+		WHERE no = #{no}
+    </update>
+    
+    <select id="getDriveInfoByNo" resultType="driveInfo">
+    	select * from driveInfo where no = #{no}
+    
+    </select>
+    
+    
+    
+    
+    <delete id="driveInfoDelete">
+    	DELETE from driveInfo 
+		where no = #{no}
+    </delete>
+    
     
     
   
