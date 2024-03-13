@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <div layout:fragment="content">
+    		
+    			 <script th:inline="javascript">
+		        /*<![CDATA[*/
+		        $(document).ready(function() {
+		            $('#driveUpdateBtn').click(function(event) {
+		            	 event.preventDefault(); // 폼 제출 막기
+		                // 서버로 데이터를 제출하기 전에 쉼표를 제거합니다.
+		                $('.won').each(function() {
+		                    $(this).val($(this).val().replace(/,/g, ''));
+		                });
+		
+		                // Ajax로 폼 제출
+		                $.ajax({
+		                    type: "POST",
+		                    url: "/infoUpdate",
+		                    data: $('#driveInfoUpdateFm').serialize(), // 폼 데이터 직렬화하여 전송
+		                    success: function(response) {
+		                        // 성공 시 작업 수행
+		                        console.log("Success:", response);
+		                        // 페이지 리로드 또는 다른 작업 수행
+		                       
+		                        alert("운행일지 수정에 성공하였습니다.");
+		                        const no = $("input[name='no']").val();
+
+		                        
+		                        window.location.href = "/driveInfo?no="+no;
+		                    },
+		                    error: function(xhr, status, error) {
+		                        // 실패 시 작업 수행
+		                        console.log("Error:", error);
+		                        alert("수정에 실패하였습니다.");
+		                        // 실패 메시지 표시 또는 다른 작업 수행
+		                    }
+		                });
+		            });
+		
+		            $('.won').on('input', function() {
+		                // 입력된 값에서 숫자 이외의 문자 제거
+		                let value = $(this).val().replace(/\D/g, '');
+		
+		                // 세 자리마다 쉼표 추가
+		                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		
+		                // 입력 필드에 새로운 값 설정
+		                $(this).val(value);
+		            });
+		            
+		            $('input[name="nowKm"]').on('input', function() {
+		                // 입력된 값에서 숫자 이외의 문자 제거
+		                let value = $(this).val().replace(/\D/g, '');
+		                // 입력 필드에 새로운 값 설정
+		                $(this).val(value);
+		
+		            });
+		        });
+		        /*]]>*/
+		    </script>
+		    
+		    
+    
+		  <div class="card text-center">
+			  <div class="card-header">
+			    <!-- 파라미터로 받아온 날짜 표시 -->
+			  </div>
+					<label for="nowKm" class="form-label fs-5 mt-2">운행일지 수정</label>
+			 
+			  
+			  <form id="driveInfoUpdateFm" method="post" action="/infoUpdate">
+				  <div class="card-body">
+					   <div class="input-group flex-nowrap">
+						  	<span class="input-group-text subSpan" id="addon-wrapping">오늘 주행거리</span>
+							<input type="text" class="form-control" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="nowKm" id="nowKm" th:value="${updateInfo.totalKm}">
+							<span class="input-group-text subSpanBt" id="addon-wrapping">Km</span>
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text subSpan" id="addon-wrapping">오늘 수입</span>
+						  <input type="text" class="form-control won" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="todayIncome" th:value="${updateInfo.todayIncome}">
+						  <span class="input-group-text subSpanBt" id="addon-wrapping">원</span>
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text subSpan" id="addon-wrapping">오늘 비용()</span>
+						  <input type="text" class="form-control won" placeholder="여기에 입력" aria-label="Username" aria-describedby="addon-wrapping" name="todayFuel" th:value="${updateInfo.todayFuel}">
+						  <span class="input-group-text subSpanBt" id="addon-wrapping">원</span>
+						</div>
+					<!-- 	<div class="input-group flex-nowrap">
+						  <span class="input-group-text" id="addon-wrapping">차량번호</span>
+						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+						</div>
+						<div class="input-group flex-nowrap">
+						  <span class="input-group-text" id="addon-wrapping">차량번호</span>
+						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+						</div> -->
+						
+						<div class="mb-3">
+						  <label for="exampleFormControlTextarea1" class="form-label fs-5 mt-5">메모</label>
+						  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="todayMemo" th:text="${updateInfo.todayMemo}"></textarea>
+						</div>
+				  </div>
+				  <div class="card-footer text-body-secondary">
+					 <input type="hidden" th:value="${updateInfo.no}" name="no">
+				  
+				  
+				    <button class="btn btn-primary" id="driveUpdateBtn">기록 수정하기</button>
+				  </div>
+			  </form>
+		</div>
+		
+		
+		
+		
+		
+		
+		 
+		
+        
+        
+    </div>
+
+</html>

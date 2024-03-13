@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <div layout:fragment="content">
+    <script>
+    	$(function(){
+    		$("#driveInsertBtn").click(function(){
+    			window.location.href = "/driveInfoInsert";
+    		})
+    		
+    		$("#driveInfo").click(function(){
+    			window.location.href = "/driveInfo";
+    		})
+    		
+    		$("#driveStatistics").click(function(){
+    			window.location.href = "/driveStatistics";
+    		})
+    		
+    		
+    		$("#signInBtn").click(function(){
+    			window.location.href = "/signIn";
+    		})
+    		
+    		$("#signUpBtn").click(function(){
+    			window.location.href = "/signUp";
+    		})
+    		
+    	})
+    </script>
+    
+        
+       <div class="card text-center">
+			  <div class="card-header">
+			       <h5 class="card-title">42부4942<br>2024년 3월 2일 입니다</h5>
+			  </div>
+			  <div class="card-body">
+				  	<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="driveInsertBtn">운행정보 입력</button>
+				  	</div>
+				  	<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="driveInfo">운행정보 조회</button>
+				  	</div>
+				  	<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="driveStatistics">통계보기</button>
+				  	</div>
+				  <!-- 	<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="">게시판</button>
+				  	</div> -->
+			  	
+				   
+			  </div>
+			  <div class="card-footer text-body-secondary">
+			    2 days ago
+			  </div>
+		</div>
+		
+		
+		<div class="card text-center">
+			  <div class="card-header">
+			    <h5 class="card-title">로그인 해주세요</h5>
+			  </div>
+			  <div class="card-body">
+			  		<div>
+			  			<p>회원가입하시고 여러가지 서비스를 이용해보세요.</p>
+			  		</div>
+			  		<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="signInBtn">로그인</button>
+				  	</div>
+				  	<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="signUpBtn">회원가입</button>
+				  	</div>
+			  </div>
+			  <div class="card-footer text-body-secondary">
+			    2 days ago
+			  </div>
+		</div>
+		
+		
+		<div class="card text-center">
+			  <div class="card-header">
+			    <h5 class="card-title">날씨</h5>
+			  </div>
+			  <div class="card-body">
+			  		현재기온 : -5 <br>
+				    오늘 비 예보가 있습니다. <br>
+				    내일은 화창합니다.
+			  </div>
+			  <div class="card-footer text-body-secondary">
+			    2 days ago
+			  </div>
+		</div>
+		
+		
+        
+        
+    </div>
+
+</html>
