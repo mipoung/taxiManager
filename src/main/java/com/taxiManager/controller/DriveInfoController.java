@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,19 +57,19 @@ public class DriveInfoController {
 	}
 	
 	
-	@PostMapping("/driveInfoDelete")
-	public String driveInfoDelete(DriveInfoVO dvo) {
-		int result = driveInfoService.driveInfoDelete(dvo.getNo());
-		System.out.println("============================ 운행정보 삭제하기 ==========================");
+	@DeleteMapping("/driveInfoDelete/{no}")
+	public ResponseEntity<String> driveInfoDelete(@PathVariable("no") String no) {
 		
-		if(result > 0) {
-			System.out.println(result + "개의 운행일지가 삭제 되었습니다.");
-		} else {
-			System.out.println("삭제 실패하였습니다.");
-		}
-		
-		return "redirect:/driveInfo";
+	    int result = driveInfoService.driveInfoDelete(no);
+	    System.out.println("============================ 운행정보 삭제하기 ==========================");
+	    
+	    if (result > 0) {
+	        return ResponseEntity.ok().body(result + "개의 운행일지가 삭제 되었습니다.");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("삭제 실패하였습니다.");
+	    }
 	}
+
 	
 	
 	

@@ -5,43 +5,53 @@
       
 <div layout:fragment="content">
 	 <script th:inline="javascript">
-		$(function(){
-			$(".driveDeleteBtn").click(function(event) {
-				const deleteChkMsg = confirm("삭제하면 복구 불가능합니다. 정말 삭제하시겠어요?");
-				var no = $(this).closest('.card').find('#noVal').text();
-				$("#noVal").val(no);
+	 $(function() {
+		    $(".driveDeleteBtn").click(function(event) {
+		        const deleteChkMsg = confirm("삭제하면 복구 불가능합니다. 정말 삭제하시겠어요?");
+		        var no = $(this).closest('.card').find('#noVal').text();
 
-				if(deleteChkMsg){
-	        		
-	        		$('#driveInfofm').attr('action', '/driveInfoDelete');
-				    $('#driveInfofm').submit();
-	        	} else {
-	        		console.log("삭제취소");
-	        		event.preventDefault(); // 기본 이벤트 막기
-	        	}
-			        
-			});
-			
-			
-			$(".driveUpdateBtn").click(function(event){
-				
-				console.log("driveUpdateBtn 클릭");
-				var no = $(this).closest('.card').find('#noVal').text();
-				console.log(no);
-				$("#noVal").val(no);
-				
-				$('#driveInfofm').attr('action', '/driveInfoUpdate');
-				$('#driveInfofm').submit(); 
-			//	event.preventDefault();
-			})
+		        if (deleteChkMsg) {
+		        	//event.preventDefault();
+		            $.ajax({
+		                url: '/driveInfoDelete/' + no,
+		                type: 'DELETE',
+		                success: function(data) {
+		                    console.log(data); // 삭제 성공 시 서버에서 반환한 메시지 출력
+		                    if (data > 0) { // 성공적인 DELETE 요청을 받았을 때
+		                        window.location.href = '/driveInfo'; // 리다이렉트할 URL로 이동
+		                    } else {
+		                    	alert("삭제되었습니다.");
+		                    }
+		                },
+		                error: function(xhr, status, error) {
+		                    console.error(xhr.responseText); // 오류 발생 시 서버에서 반환한 오류 메시지 출력
+		                    // 원하는 동작 수행
+		                }
+		            });
+		        } else {
+		            console.log("삭제 취소");
+		            event.preventDefault(); // 기본 이벤트 막기 (페이지 새로고침 등)
+		        }
+		    });
 
-			
-		})
+		    $(".driveUpdateBtn").click(function(event) {
+		        console.log("driveUpdateBtn 클릭");
+		        var no = $(this).closest('.card').find('#noVal').text();
+		        console.log(no);
+		        $("#noVal").val(no);
+
+		        $('#driveInfofm').attr('method', 'POST');
+		        $('#driveInfofm').attr('action', '/driveInfoUpdate');
+
+		        $('#driveInfofm').submit();
+		    })
+		});
+
 	
 	</script>
 	
 	
-	 <form id="driveInfofm" method="post">
+	 <form id="driveInfofm">
 						 <!-- 수정으로 데이터를 재전송하기 위한 폼 -->
 	          		  <input type="hidden" name="no" id="noVal" value="">
 	          		 <!--  <input type="hidden" th:value="${driveInfo.totalKm}" name="totalKm">
