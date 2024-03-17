@@ -10,3 +10,7 @@
 .subSpanBt { width : 50px; }
 
 .card-body > div { margin-bottom : 5px; }
+
+.borderAppend { border: 5px solid skyblue; }
+
+.driveInfoOne > .card { border : none; }
