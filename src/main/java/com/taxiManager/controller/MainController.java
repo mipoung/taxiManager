@@ -38,7 +38,7 @@ public class MainController {
 	@GetMapping("/signUp")
 	public String mainSignUp(Model model) {
 		
-		System.out.println("로그인 페이지 실행");
+		System.out.println("회원가입 페이지 실행");
 		return "views/user/signUp.html";
 	}
 	
