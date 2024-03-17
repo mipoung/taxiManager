@@ -16,14 +16,15 @@
                     return;
                 }
                 
-            $.ajax({
+                
+                $.ajax({
                 type: 'POST',
                 url: '/check_duplicate_id',
                 data: {id: id},
                 success: function(response) {
                     if (response === 'available') {
                         alert('사용 가능한 ID입니다.');
-                       $('#signInBtn').prop('disabled', false);
+                     //  $('#signInBtn').prop('disabled', false);
 
                         
                     } else {
@@ -33,11 +34,119 @@
                     }
                 }
             });
-        });
+            });    
+               
+               /*
+          var pwdCheck1 = 
+          		 $("#inputPassword").on('keyup',function() { 
+				var pwd = $(this).val();
+				var pwdPattern = /^[a-zA-Z0-9]{5,12}$/;
+				
+				
+				if(pwd.length < 5 ) {
+					 $("#passwordMessage").text("패스워드가 너무 짧습니다.").css("color", "red");
+					 $('#signInBtn').prop('disabled', true);
+       			 } else if (pwd.length > 12) {
+        			  $("#passwordMessage").text("글자 수를 초과하였습니다.").css("color", "red");
+        			  $('#signInBtn').prop('disabled', true);
+			        } else if (!pwd.match(/[a-zA-Z]/)) {
+			          $("#passwordMessage").html("영문자를 포함해 주세요.").css("color", "red");
+			          $('#signInBtn').prop('disabled', true);
+			        } else if (!pwd.match(/[0-9]/)) {
+			          $("#passwordMessage").html("숫자를 포함해주세요.").css("color", "red");
+			          $('#signInBtn').prop('disabled', true);
+			        } else {
+			          $("#passwordMessage").text("사용 가능한 비밀번호 입니다.").css("color", "green");
+				}
+			});
+            	
+            var pwdCheck2 =	
+              $("#inputPassword1").on('keyup', function() {
+		        var pwd1 = $(this).val();
+		        var pwd = $("#inputPassword").val();
+		
+		        if (pwd1 !== pwd) {
+		          $("#confirmPasswordMessage").text("비밀번호가 다릅니다.").css("color", "red");
+		          $('#signInBtn').prop('disabled', true);
+		        } else {
+		          $("#confirmPasswordMessage").text("비밀번호가 일치합니다.").css("color", "green");
+		        }
+		      });
+           
+            */
+            
+        var pwdCheck1 = $("#inputPassword").on('keyup', function() { 
+        var pwd = $(this).val();
+        var pwdPattern = /^[a-zA-Z0-9]{5,12}$/;
         
-        
-        
+        if(pwd.length < 5 ) {
+            $("#passwordMessage").text("패스워드가 너무 짧습니다.").css("color", "red");
+            $('#signInBtn').prop('disabled', true);
+        } else if (pwd.length > 12) {
+            $("#passwordMessage").text("글자 수를 초과하였습니다.").css("color", "red");
+            $('#signInBtn').prop('disabled', true);
+        } else if (!pwd.match(/[a-zA-Z]/)) {
+            $("#passwordMessage").html("영문자를 포함해 주세요.").css("color", "red");
+            $('#signInBtn').prop('disabled', true);
+        } else if (!pwd.match(/[0-9]/)) {
+            $("#passwordMessage").html("숫자를 포함해주세요.").css("color", "red");
+            $('#signInBtn').prop('disabled', true);
+        } else {
+            $("#passwordMessage").text("사용 가능한 비밀번호 입니다.").css("color", "green");
+        }
     });
+    
+    var pwdCheck2 = $("#inputPassword1").on('keyup', function() {
+        var pwd1 = $(this).val();
+        var pwd = $("#inputPassword").val();
+        
+        if (pwd1 !== pwd) {
+            $("#confirmPasswordMessage").text("비밀번호가 다릅니다.").css("color", "red");
+            $('#signInBtn').prop('disabled', true);
+        } else {
+            $("#confirmPasswordMessage").text("비밀번호가 일치합니다.").css("color", "green");
+        }
+    });
+    
+    // 두 이벤트 핸들러가 모두 실행되고, 메시지가 모두 green으로 설정되었을 때 signInBtn 활성화
+    $("#inputPassword, #inputPassword1").on('keyup', function() {
+        if ($("#passwordMessage").css("color") === "rgb(0, 128, 0)" && $("#confirmPasswordMessage").css("color") === "rgb(0, 128, 0)") {
+            $('#signInBtn').prop('disabled', false);
+        } else {
+            $('#signInBtn').prop('disabled', true);
+        }
+    });
+
+
+	
+		 function checkInputs() {
+        var id = $('#inputId').val();
+        var pwd = $("#inputPassword").val();
+        var pwd1 = $("#inputPassword1").val();
+        var carNum = $("#inputCarNum").val();
+        var email = $("#email").val();
+        var phoneNum1 = $("#phoneNum1").val();
+        var phoneNum2 = $("#phoneNum2").val();
+        var phoneNum3 = $("#phoneNum3").val();
+
+        // 하나라도 공백인 경우 signInBtn을 비활성화
+        if (id.trim() === '' || pwd.trim() === '' || pwd1.trim() === '' || carNum.trim() === '' || email.trim() === '' || phoneNum1.trim() === '' || phoneNum2.trim() === '' || phoneNum3.trim() === '') {
+            $('#signInBtn').prop('disabled', true);
+        } else {
+            $('#signInBtn').prop('disabled', false);
+        }
+    }
+
+    // 모든 input 필드의 값이 변경될 때마다 checkInputs 함수 호출
+    $("#inputId, #inputPassword, #inputPassword1, #inputCarNum, #email, #phoneNum1, #phoneNum2, #phoneNum3").on('keyup change', checkInputs);
+
+    // 중복 확인 버튼 클릭 시 checkInputs 함수 호출
+    $('#checkDuplicateId').click(checkInputs);
+    
+    
+    }); //전체 스크립트 괄호
+          
+        
 </script>
 
 
@@ -50,18 +159,6 @@
 					
 					
 					<form>
-						<!--
-					  <div class="row mb-3">
-					    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-					    <div class="col-sm-10">
-					      <input type="email" class="form-control" id="inputEmail3">
-					      <div class="col-sm-2">
-  						  <button type="button" class="btn btn-primary" id="checkDuplicateBtn">중복 확인</button>
-						  </div>
-					    </div>
-					  </div> -->
-					  
-					  <!-- ID -->
 					<div class="row mb-3">
 					    <label class="col-sm-2 col-form-label" for="inputId">ID</label>
 					    <div class="col-sm-8 input-group">
@@ -78,7 +175,8 @@
 					  <div class="row mb-3">
 					    <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호</label>
 					    <div class="col-sm-10">
-					      <input type="password" class="form-control" id="inputPassword3">
+					      <input type="password" class="form-control" id="inputPassword">
+							<p id="passwordMessage"></p>
 					    </div>
 					  </div>
 					  
@@ -87,7 +185,8 @@
 				    <div class="row mb-3">
 					    <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호 확인</label>
 					    <div class="col-sm-10">
-					      <input type="password" class="form-control" id="inputPassword3">
+					      <input type="password" class="form-control" id="inputPassword1">
+					   		<p id="confirmPasswordMessage"></p>
 					    </div>
 					  </div>
 					
