@@ -19,6 +19,26 @@
 		SELECT * from driveInfo
 		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
 	</select>
+	
+	<update id="infoUpdate">
+    	UPDATE driveInfo
+		SET total_Km = #{totalKm}, now_km = #{nowKm}, today_fuel = #{todayFuel}, today_memo = #{todayMemo}
+		WHERE no = #{no}
+    </update>
+    
+    <select id="getDriveInfoByNo" resultType="driveInfo">
+    	select * from driveInfo where no = #{no}
+    
+    </select>
+    
+    
+    
+    
+    <delete id="driveInfoDelete">
+    	DELETE from driveInfo 
+		where no = #{no}
+    </delete>
+    
     
     
   

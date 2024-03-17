@@ -13,5 +13,9 @@ public interface DriveInfoService {
 	int infoInsert(DriveInfoVO driveInfoVO);
 	int driveInfoChk();
 	List<UserVO> driveInfoList();
+	int driveInfoDelete(String no);
+	int driveInfoUpdate(String no);
+	int infoUpdate(DriveInfoVO dvo);
+	DriveInfoVO getDriveInfoByNo(String no);
 
 }

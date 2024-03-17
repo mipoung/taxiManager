@@ -1,67 +1,132 @@
 <!DOCTYPE html>
-<html xmlns:th="http//www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
       
 <div layout:fragment="content">
+	 <script th:inline="javascript">
+	 $(function() {
+		    $(".driveDeleteBtn").click(function(event) {
+		        const deleteChkMsg = confirm("삭제하면 복구 불가능합니다. 정말 삭제하시겠어요?");
+		        var no = $(this).closest('.card').find('#noVal').text();
 
-    <div th:each="driveInfo, iterStat : ${list}" class="mb-4" th:classappend="${iterStat.index < 1} ? 'driveInfoOne' : ''">
-        <div class="card text-center" style="border: 5px solid #c7c7c7;">
-            <div class="card-header">
-              <h5 class="card-title">2024년 3월 2일(토)</h5>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" colspan="2">
-                            	<span th:text="${driveInfo.carNumber}"></span>
-                                <span th:text="${driveInfo.no}"></span>번째 운행기록
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">총 주행거리</th>
-                            <td><span th:text="${driveInfo.totalKm}"></span> km</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">오늘 수입</th>
-                            <td><span th:text="${driveInfo.todayIncome}"></span> 원</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">오늘 비용</th>
-                            <td><span th:text="${driveInfo.todayFuel}"></span> 원</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">순수익</th>
-                            <td><span th:text="${driveInfo.netProfit}"></span> 원</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="2">메모</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><span th:text="${driveInfo.todayMemo}"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer text-body-secondary">
-                <button class="btn btn-primary" id="driveInsertBtn">수정하기</button>
-                <button class="btn btn-primary" id="driveDeleteBtn">삭제하기</button>
-            </div>
-        </div>
-    </div>
+		        if (deleteChkMsg) {
+		        	//event.preventDefault();
+		            $.ajax({
+		                url: '/driveInfoDelete/' + no,
+		                type: 'DELETE',
+		                success: function(data) {
+		                    console.log(data); // 삭제 성공 시 서버에서 반환한 메시지 출력
+		                    if (data > 0) { // 성공적인 DELETE 요청을 받았을 때
+		                        window.location.href = '/driveInfo'; // 리다이렉트할 URL로 이동
+		                    } else {
+		                    	alert("삭제되었습니다.");
+		                    }
+		                },
+		                error: function(xhr, status, error) {
+		                    console.error(xhr.responseText); // 오류 발생 시 서버에서 반환한 오류 메시지 출력
+		                    // 원하는 동작 수행
+		                }
+		            });
+		        } else {
+		            console.log("삭제 취소");
+		            event.preventDefault(); // 기본 이벤트 막기 (페이지 새로고침 등)
+		        }
+		    });
+
+		    $(".driveUpdateBtn").click(function(event) {
+		        console.log("driveUpdateBtn 클릭");
+		        var no = $(this).closest('.card').find('#noVal').text();
+		        console.log(no);
+		        $("#noVal").val(no);
+
+		        $('#driveInfofm').attr('method', 'POST');
+		        $('#driveInfofm').attr('action', '/driveInfoUpdate');
+
+		        $('#driveInfofm').submit();
+		    })
+		});
+
+	
+	</script>
+	
+	
+	 <form id="driveInfofm">
+						 <!-- 수정으로 데이터를 재전송하기 위한 폼 -->
+	          		  <input type="hidden" name="no" id="noVal" value="">
+	          		 <!--  <input type="hidden" th:value="${driveInfo.totalKm}" name="totalKm">
+	          		  <input type="hidden" th:value="${driveInfo.todayIncome}" name="todayIncome">
+	          		  <input type="hidden" th:value="${driveInfo.todayFuel}" name="todayFuel">
+	          		  <input type="hidden" th:value="${driveInfo.netProfit}" name="netProfit">
+	          		  <input type="hidden" th:value="${driveInfo.todayMemo}" name="todayMemo"> -->
+	
+
+	    <div th:if="${!#lists.isEmpty(list)}" th:each="driveInfo, iterStat : ${list}" class="mb-4" th:classappend="${iterStat.index < 1} ? 'driveInfoOne' : ''">
+	        <div class="card text-center" style="border: 3px solid #c7c7c7;">
+	            <div class="card-header">
+	              <h5 class="card-title">2024년 3월 2일(토)</h5>
+	            </div>
+	            <div class="card-body">
+	                <table class="table">
+	                    <thead>
+	                        <tr>
+	                            <th scope="col" colspan="2">
+	                            	<span th:text="${driveInfo.carNumber}"></span> <br>
+	                                <span th:text="${driveInfo.no}" id="noVal"></span>번째 운행기록
+	                            </th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <tr>
+	                            <th scope="row">총 주행거리</th>
+	                            <td><span th:text="${driveInfo.totalKm}"></span> km</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">오늘 수입</th>
+	                            <td><span th:text="${driveInfo.todayIncome}"></span> 원</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">오늘 비용</th>
+	                            <td><span th:text="${driveInfo.todayFuel}"></span> 원</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">순수익</th>
+	                            <td><span th:text="${driveInfo.netProfit}"></span> 원</td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2"></td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row" colspan="2">메모</th>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2"><span th:text="${driveInfo.todayMemo}"></span></td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+	            <div class="card-footer text-body-secondary">
+	            	
+	          		  
+	                <button class="btn btn-primary driveUpdateBtn">수정하기</button>
+	                <button class="btn btn-primary driveDeleteBtn">삭제하기</button>
+	            </div>
+	        </div>
+	       
+	    </div>
+    
+    </form>
     
     <div class="card text-center">
         <div class="card-body">
-            <button class="btn btn-primary" id="driveInserBtn">다른날짜 조회하2</button>
+        	<span>
+	        	<h5 th:if="${#lists.isEmpty(list)}">오늘 입력된 운행 일지가 없습니다. <br> 새로운 운행 일지를 작성하시겠어요?</h5>
+	            <button class="btn btn-primary" onclick="window.location.href='/driveInfoInsert'">새로운 운행 일지 작성하기</button>
+
+        	</span>
+           	 <button class="btn btn-primary" id="driveInserBtn">다른날짜 조회하기</button> <!-- list가 비어있든, 없든 표출 -->
         </div>
     </div>
-    
 </div>
 
 </html>

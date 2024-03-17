@@ -32,4 +32,30 @@ public class DriveInfoServiceImpl implements DriveInfoService {
 		List<UserVO> list = driveInfoDAO.driveInfoList();
 		return list;
 	}
+
+	@Override
+	public int driveInfoDelete(String no) {
+		int result = driveInfoDAO.driveInfoDelete(no);
+		return result;
+	}
+
+	@Override
+	public int driveInfoUpdate(String no) {
+		int result = driveInfoDAO.driveInfoUpdate(no);
+		return result;
+	}
+
+	@Override
+	public int infoUpdate(DriveInfoVO dvo) {
+		int result = driveInfoDAO.infoUpdate(dvo);
+		return result;
+	}
+
+	@Override
+	public DriveInfoVO getDriveInfoByNo(String no) {
+		DriveInfoVO dvo = driveInfoDAO.getDriveInfoByNo(no);
+		return dvo;
+	}
+
+	
 }
