@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.taxiManager.service.MainService;
+import com.taxiManager.vo.CarInfoVO;
 import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
@@ -23,8 +24,13 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String mainPage(Model model) {
+		System.out.println(" ===================== 메인페이지 실행 ===================== ");
+//		List<UserVO> userInfUserVO = mainService.mainList(userId);
+		List<CarInfoVO> userInfo = mainService.mainList();
+		System.out.println(userInfo.toString());
 		
-		System.out.println("메인페이지 실행");
+		model.addAttribute("userInfo", userInfo);
+		
 		return "views/main/index.html";
 	}
 	
@@ -38,7 +44,7 @@ public class MainController {
 	@GetMapping("/signUp")
 	public String mainSignUp(Model model) {
 		
-		System.out.println("로그인 페이지 실행");
+		System.out.println("회원가입 페이지 실행");
 		return "views/user/signUp.html";
 	}
 	

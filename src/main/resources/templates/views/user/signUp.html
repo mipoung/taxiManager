@@ -2,51 +2,139 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
+      
+<head>
+  <script>
+    $(document).ready(function() {
+        $('#checkDuplicateId').click(function() {
+            var id = $('#inputId').val();
+                // ID가 5자 이상 12자 이하의 영문자와 숫자로만 구성되어 있는지 검사
+                var idPattern = /^[a-zA-Z0-9]{5,12}$/;
+                if (!idPattern.test(id)) {
+                    alert('ID는 5자 이상 12자 이하의 영문자와 숫자로만 입력 가능합니다.');
+                    $('#signInBtn').prop('disabled', true);
+                    return;
+                }
+                
+            $.ajax({
+                type: 'POST',
+                url: '/check_duplicate_id',
+                data: {id: id},
+                success: function(response) {
+                    if (response === 'available') {
+                        alert('사용 가능한 ID입니다.');
+                       $('#signInBtn').prop('disabled', false);
+
+                        
+                    } else {
+                        alert('이미 존재하는 ID입니다.');
+                        $('#signInBtn').prop('disabled', true);
+
+                    }
+                }
+            });
+        });
+        
+        
+        
+    });
+</script>
+
+
+</head>
 
     <div layout:fragment="content">
-      
-    <form>  
-      	 <div class="card">
-      	 	  <div class="card-header">
-			       <h5 class="card-title">회원가입을 환영합니다</h5>
-			  </div>
+    
+	    <div class="card">
 			  <div class="card-body">
 					
 					
-					
+					<form>
+						<!--
 					  <div class="row mb-3">
-					    <label for="inputEmail3" class="col-sm-2 col-form-label">사용할 아이디를 입력해주세요</label>
+					    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 					    <div class="col-sm-10">
-					     	 <input type="email" class="form-control" id="inputEmail3">
+					      <input type="email" class="form-control" id="inputEmail3">
+					      <div class="col-sm-2">
+  						  <button type="button" class="btn btn-primary" id="checkDuplicateBtn">중복 확인</button>
+						  </div>
 					    </div>
-					    <label for="inputPassword3" class="col-sm-2 col-form-label">사용할 비밀번호를 입력해주세요</label>
-					    <div class="col-sm-10">
-					     	 <input type="password" class="form-control" id="inputPassword3">
+					  </div> -->
+					  
+					  <!-- ID -->
+					<div class="row mb-3">
+					    <label class="col-sm-2 col-form-label" for="inputId">ID</label>
+					    <div class="col-sm-8 input-group">
+					        <input type="text" class="form-control" id="inputId" placeholder="사용하실 ID를 입력하세요">
 					    </div>
-					    <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호를 한번 더 입력해 주세요</label>
-					    <div class="col-sm-10">
-					    	  <input type="password" class="form-control" id="inputPassword3">
+					  	  <p style="color: #2b8b5f; font-size: 12px;">아이디는 영문자와 숫자 5~12자 이하로 입력해주세요.</p>
+					    <div class="col-sm-2">
+					        <button type="button" class="btn btn-primary" id="checkDuplicateId">중복 확인</button>
 					    </div>
-					    
-					    <label for="inputPassword3" class="col-sm-2 col-form-label">차량 번호를 입력해주세요</label>
+					</div>
+
+
+					<!-- 패스워드 -->
+					  <div class="row mb-3">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호</label>
 					    <div class="col-sm-10">
-					    	  <input type="password" class="form-control" id="inputPassword3">
-					    </div>
-					    
-					    <label for="inputPassword3" class="col-sm-2 col-form-label">입력</label>
-					    <div class="col-sm-10">
-					    	  <input type="password" class="form-control" id="inputPassword3">
-					    </div>
-					    
-					    <label for="inputPassword3" class="col-sm-2 col-form-label">입력</label>
-					    <div class="col-sm-10">
-					    	  <input type="password" class="form-control" id="inputPassword3">
+					      <input type="password" class="form-control" id="inputPassword3">
 					    </div>
 					  </div>
-					 
-					 
-					 
-					 <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+					  
+					<!-- 패스워드 확인 -->
+					
+				    <div class="row mb-3">
+					    <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호 확인</label>
+					    <div class="col-sm-10">
+					      <input type="password" class="form-control" id="inputPassword3">
+					    </div>
+					  </div>
+					
+					
+					
+					 <!-- 차량번호-->
+					  <div class="row mb-3">
+					    <label for="carNum" class="col-sm-2 col-form-label">차량 번호</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="inputCarNum">
+					    </div>
+					  </div>
+					
+					<!-- 이메일 -->
+					  <div class="row mb-3">
+					    <label for="email" class="col-sm-2 col-form-label">E-MAIL</label>
+					    <div class="col-sm-10">
+					      <input type="email" class="form-control" id="email">
+					    </div>
+					  </div>
+					
+					<!-- 핸드폰번호 -->
+					  <div class="row mb-3">
+					    <label for="phoneNum" class="col-sm-2 col-form-label">핸드폰 번호</label>
+					    <div class="col-sm-10">
+					      <input type="number" class="form-control" id="phoneNum1"> - 
+					    </div>
+					    
+					    <div class="col-sm-10">
+					      <input type="number" class="form-control" id="phoneNum2"> - 
+					    </div>
+					    
+					    <div class="col-sm-10">
+					      <input type="number" class="form-control" id="phoneNum3">
+					    </div>
+					  </div>
+					  
+
+					  </div>
+					  <button type="submit" class="btn btn-primary" disabled id="signInBtn">Sign in</button>
+					</form>
+					
+					
+			  </div>
+		</div>
+    
+			 <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
 					  <h4 id="scrollspyHeading1">이용약관</h4>
 					  <p>...SecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecondSecond</p>
 					  <h4 id="scrollspyHeading2">Second heading</h4>
@@ -73,12 +161,7 @@
 			  <div class="card-footer text-body-secondary">
 			     <button type="submit" class="btn btn-primary">회원가입 하기</button>
 			  </div>
-		</div>
-	
-	</form>
+        
     </div>
-    
-    
-    
 
 </html>
