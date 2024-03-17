@@ -32,8 +32,12 @@
     
         
        <div class="card text-center">
-			  <div class="card-header">
-			       <h5 class="card-title">42부4942<br>2024년 3월 2일 입니다</h5>
+			  <div th:if="${!#lists.isEmpty(userInfo)}" class="card-header">
+			  		<!--  <div th:if="${!#lists.isEmpty(list)}" th:each="driveInfo, iterStat : ${list}" class="mb-4" th:classappend="${iterStat.index < 1} ? 'driveInfoOne' : ''">
+	  --> 		  <h5 class="card-title">2024년 3월 2일 입니다</h5>
+			  		<select class="form-select form-select-lg mb-3" aria-label="Large select example">
+						  <option th:each="userInfo : ${userInfo}" th:text="${userInfo.carNumber}" th:selected="${userInfo.mainCar == 'Y'}"></option>
+					</select>
 			  </div>
 			  <div class="card-body">
 				  	<div>

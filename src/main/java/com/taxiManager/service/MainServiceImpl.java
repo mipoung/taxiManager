@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taxiManager.dao.MainDAO;
+import com.taxiManager.vo.CarInfoVO;
 import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
@@ -20,8 +21,8 @@ public class MainServiceImpl implements MainService {
 	MainDAO mainDAO;
 		
 	@Override
-	public List<UserVO> mainList() {
-		List<UserVO> list = mainDAO.mainList();
+	public List<CarInfoVO> mainList() {
+		List<CarInfoVO> list = mainDAO.mainList();
 		return list;
 	}
 	@Override
