@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taxiManager.dao.DriveInfoDAO;
+import com.taxiManager.vo.CarInfoVO;
 import com.taxiManager.vo.DriveInfoVO;
 import com.taxiManager.vo.UserVO;
 
@@ -22,20 +23,20 @@ public class DriveInfoServiceImpl implements DriveInfoService {
 	}
 
 	@Override
-	public int driveInfoChk() {
-		int result = driveInfoDAO.driveInfoChk();
+	public int driveInfoChk(DriveInfoVO dvo) {
+		int result = driveInfoDAO.driveInfoChk(dvo);
 		return result;
 	}
 
 	@Override
-	public List<UserVO> driveInfoList() {
-		List<UserVO> list = driveInfoDAO.driveInfoList();
+	public List<UserVO> driveInfoList(DriveInfoVO dvo) {
+		List<UserVO> list = driveInfoDAO.driveInfoList(dvo);
 		return list;
 	}
 
 	@Override
-	public int driveInfoDelete(String no) {
-		int result = driveInfoDAO.driveInfoDelete(no);
+	public int driveInfoDelete(DriveInfoVO dvo) {
+		int result = driveInfoDAO.driveInfoDelete(dvo);
 		return result;
 	}
 
@@ -52,9 +53,15 @@ public class DriveInfoServiceImpl implements DriveInfoService {
 	}
 
 	@Override
-	public DriveInfoVO getDriveInfoByNo(String no) {
-		DriveInfoVO dvo = driveInfoDAO.getDriveInfoByNo(no);
-		return dvo;
+	public DriveInfoVO getDriveInfoByNo(DriveInfoVO dvo) {
+		DriveInfoVO result = driveInfoDAO.getDriveInfoByNo(dvo);
+		return result;
+	}
+
+	@Override
+	public int carInsert(CarInfoVO cvo) {
+		int result = driveInfoDAO.carInsert(cvo);
+		return result;
 	}
 
 	

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <div layout:fragment="content">
+    		
+    		 <script th:inline="javascript">
+		        
+		    </script>
+		    
+		    
+		 <div class="card text-center">
+			  <div class="card-header">
+			    알림
+			  </div>
+			  <div class="container-sm">
+					<p th:text="${msg}"></p>
+
+			 
+			  </div>
+		  	  <div class="card-footer text-body-secondary">
+		  		  <button class="btn btn-primary" onclick="window.location.href='/'">메인 화면으로 이동</button>
+			  </div>
+		</div>
+    
+		
+		
+		
+		
+		
+		 
+		
+        
+        
+    </div>
+
+</html>

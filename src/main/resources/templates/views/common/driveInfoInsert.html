@@ -15,8 +15,21 @@
 		                });
 		
 		                // 폼 제출
-		                $('#driveInfoInsertFm').submit();
+		                $('#driveInfoFm').attr('action', '/infoInsert');
+		                $('#driveInfoFm').submit();
 		            });
+		            
+		            
+		            $('#driveInfoBtn').click(function() {
+		
+		                // 폼 제출
+		                $('#driveInfoFm').attr('method', 'GET');
+		                $('#driveInfoFm').attr('action', '/driveInfo');
+		                $('#driveInfoFm').submit();
+		                
+		            });
+		            
+		            
 		
 		            $('.won').on('input', function() {
 		                // 입력된 값에서 숫자 이외의 문자 제거
@@ -41,10 +54,11 @@
 		    </script>
 		    
 		    
-		    
 		 <div th:if="${result > 0}" class="card text-center">
 			  <div class="card-header">
-			    오늘 기록(2024년 3월 2일)
+			    오늘 기록(2024년 3월 2일) <br>
+					<span th:text="${carNumber}"></span>
+
 			  </div>
 			  <div class="container-sm">
 					<h5 class="mt-2" th:text="'오늘 입력된 운행 정보가 ' + ${result} + '건 있습니다.'"></h5>
@@ -53,7 +67,7 @@
 			 
 			  </div>
 		  	  <div class="card-footer text-body-secondary">
-		  		  <button class="btn btn-primary" onclick="window.location.href='/driveInfo'">운행정보 조회</button>
+		  		  <button class="btn btn-primary" id="driveInfoBtn">운행정보 조회</button>
 			  </div>
 		</div>
     
@@ -65,7 +79,10 @@
 			  	<label th:unless="${result > 0}" for="nowKm" class="form-label fs-5 mt-2">아직 오늘 기록을 입력하지 않았습니다. <br>기록을 입력해보세요.</label>
 			 
 			  
-			  <form id="driveInfoInsertFm" method="post" action="/infoInsert">
+			  <form id="driveInfoFm" method="post">
+			  		<!-- 차량정보 전송을 위한 폼 -->
+			  		<input type="text" name="carNumber" th:value="${carNumber}">
+			  		
 				  <div class="card-body">
 					   <div class="input-group flex-nowrap">
 						  	<span class="input-group-text subSpan" id="addon-wrapping">오늘 주행거리</span>
@@ -97,7 +114,7 @@
 						</div>
 				  </div>
 				  <div class="card-footer text-body-secondary">
-				    <button class="btn btn-primary" id="driveInserBtn">기록 저장</button>
+				    <button class="btn btn-primary" id="driveInsertBtn">기록 저장</button>
 				  </div>
 			  </form>
 		</div>

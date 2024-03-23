@@ -29,6 +29,12 @@ public class MainController {
 		List<CarInfoVO> userInfo = mainService.mainList();
 		System.out.println(userInfo.toString());
 		
+		if(userInfo.isEmpty()) {
+			System.out.println("리스트가 비어있어요");
+		} else {
+			System.out.println("값이 있어요");
+		}
+		
 		model.addAttribute("userInfo", userInfo);
 		
 		return "views/main/index.html";
@@ -48,6 +54,12 @@ public class MainController {
 		return "views/user/signUp.html";
 	}
 	
+	@GetMapping("/infoVw")
+	public String infoVw(Model model) {
+		
+		return "views/common/infoVw.html";
+	}
+	
 	@PostMapping("/check_duplicate_id")
 	@ResponseBody
 	public String checkId(@RequestParam("id") String id) {
@@ -55,6 +67,9 @@ public class MainController {
 		return mainService.checkDuplicateId(id);
 		
 	}
+	
+	
+
 	
 	
 }

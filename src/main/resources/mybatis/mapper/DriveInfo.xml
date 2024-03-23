@@ -5,29 +5,39 @@
 
 
   	<insert id="infoInsert">
-	    INSERT INTO DriveInfo (now_km, car_number,today_income, today_fuel, today_memo)
-	    VALUES (#{nowKm}, '인천13부1231', #{todayIncome}, #{todayFuel}, #{todayMemo})
+	    INSERT INTO DriveInfo (user_id, now_km, car_number,today_income, today_fuel, today_memo)
+	    VALUES ('user2', #{nowKm}, #{carNumber}, #{todayIncome}, #{todayFuel}, #{todayMemo})
 	</insert>
 	
 	<select id="driveInfoChk" resultType="int">
 		SELECT count(*) FROM driveInfo
-		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
+		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d') and user_id = 'user2' and car_number = #{carNumber}
 		
 	</select>
 
 	<select id="driveInfoList" resultType="driveInfo">
+		SELECT 
+	     A.*,
+	    ROW_NUMBER() OVER (PARTITION BY user_id, car_number ORDER BY no) AS car_info_no
+	FROM 
+	    driveInfo A
+	WHERE 
+		DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
+		and
+	    user_id = 'user2' AND car_number = #{carNumber}
+	<!--     
 		SELECT * from driveInfo
-		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d')
+		WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(regist_Time, '%Y-%m-%d') and user_id = 'user2' and car_number = #{carNumber} -->
 	</select>
 	
 	<update id="infoUpdate">
     	UPDATE driveInfo
 		SET total_Km = #{totalKm}, now_km = #{nowKm}, today_fuel = #{todayFuel}, today_memo = #{todayMemo}
-		WHERE no = #{no}
+		WHERE user_id = 'user2' and car_number = #{carNumber} and no = #{no}
     </update>
     
     <select id="getDriveInfoByNo" resultType="driveInfo">
-    	select * from driveInfo where no = #{no}
+    	select * from driveInfo where no = #{no} and user_id = 'user2' and car_number = #{carNumber}
     
     </select>
     
@@ -36,9 +46,14 @@
     
     <delete id="driveInfoDelete">
     	DELETE from driveInfo 
-		where no = #{no}
+		where no = #{no} and #{carNumber} and user_id = 'user2'
     </delete>
     
+    
+    <insert id="carInsert">
+    	INSERT INTO CAR_INFO (user_id, car_number, car_name, total_km, average_mpg, main_car, type)
+		VALUES ('user2', #{carNumber}, #{carName}, '0', '0', #{carNumber}, #{type})
+    </insert>
     
     
   

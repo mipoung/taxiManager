@@ -7,11 +7,23 @@
     <script>
     	$(function(){
     		$("#driveInsertBtn").click(function(){
-    			window.location.href = "/driveInfoInsert";
+    			var carNumber = $("#carSelect").val();
+                $("#carNumber").val(carNumber);
+    			
+    			
+    			$("#mainDriveFm").attr("method", "post");
+    			$("#mainDriveFm").attr("action", "/driveInfoInsert");
+    			$("#mainDriveFm").submit();
     		})
     		
     		$("#driveInfo").click(function(){
-    			window.location.href = "/driveInfo";
+    			
+    			var carNumber = $("#carSelect").val();
+                $("#carNumber").val(carNumber);
+    			
+    			$("#mainDriveFm").attr("method", "get");
+    			$("#mainDriveFm").attr("action", "/driveInfo");
+    			$("#mainDriveFm").submit();
     		})
     		
     		$("#driveStatistics").click(function(){
@@ -27,15 +39,31 @@
     			window.location.href = "/signUp";
     		})
     		
+    		$("#carInsertVw").click(function(){
+    			window.location.href = "/carInsertVw";
+    		})
+    		
+    		// 페이지 로드될 때 셀렉트 요소의 값을 입력란에 설정
+       		// $('#carNumber').val($('#carSelect').val());
+    		
+    		  // 셀렉트 요소의 값이 변경될 때마다 입력란의 값도 업데이트
+    		//  $('#carSelect').change(function() {
+    	     //       $('#carNumber').val($(this).val());
+    	   //   });
+    		
     	})
     </script>
     
+    	<form id="mainDriveFm">
+    		<input type="hidden" name="carNumber" id="carNumber" value=""/>
+    	</form>
+    
         
-       <div class="card text-center">
-			  <div th:if="${!#lists.isEmpty(userInfo)}" class="card-header">
+       <div class="card text-center" th:if="${!#lists.isEmpty(userInfo)}">
+			  <div class="card-header">
 			  		<!--  <div th:if="${!#lists.isEmpty(list)}" th:each="driveInfo, iterStat : ${list}" class="mb-4" th:classappend="${iterStat.index < 1} ? 'driveInfoOne' : ''">
 	  --> 		  <h5 class="card-title">2024년 3월 2일 입니다</h5>
-			  		<select class="form-select form-select-lg mb-3" aria-label="Large select example">
+			  		<select class="form-select form-select-lg mb-3" aria-label="Large select example" id="carSelect">
 						  <option th:each="userInfo : ${userInfo}" th:text="${userInfo.carNumber}" th:selected="${userInfo.mainCar == 'Y'}"></option>
 					</select>
 			  </div>
@@ -60,7 +88,28 @@
 			  </div>
 		</div>
 		
+		<!-- 로그인 됐는데 등록된 차량이 없을 경우 -->
+		<!-- <div class="card text-center" th:if="${#lists.isEmpty(userInfo)}"> -->
+		<div class="card text-center">
+			  <div class="card-header">
+			    <h5 class="card-title">차량을 등록해주세요</h5>
+			  </div>
+			  <div class="card-body">
+			  		<div>
+			  			<p>현재 등록된 차량이 없습니다. 새로운 차량을 등록하고 운행일지를 작성해보세요.</p>
+			  		</div>
+			  		<div>
+				  		<button type="button" class="btn btn-primary btn-lg" id="carInsertVw">차량등록</button>
+				  	</div>
+			  </div>
+			  <div class="card-footer text-body-secondary">
+			    2 days ago
+			  </div>
+		</div>
+		<!-- 로그인 됐는데 등록된 차량이 없을 경우 끝 -->
 		
+		
+		<!-- 로그인 안했을 경우 -->
 		<div class="card text-center">
 			  <div class="card-header">
 			    <h5 class="card-title">로그인 해주세요</h5>
@@ -80,7 +129,7 @@
 			    2 days ago
 			  </div>
 		</div>
-		
+		<!-- 로그인 안했을 경우 끝 -->
 		
 		<div class="card text-center">
 			  <div class="card-header">

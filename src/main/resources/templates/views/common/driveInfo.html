@@ -6,73 +6,104 @@
 <div layout:fragment="content">
 	 <script th:inline="javascript">
 	 $(function() {
+		 
+		 	/* 삭제 후 메세지 출력 */
+			 var deleteMsg = [[${deleteMsg}]]; // 삭제 후 메세지
+			 var updateMsg = [[${updateMsg}]]; // 업데이트 후 메세지
+			 
+			 if(!deleteMsg){ 
+				 console.log("조회");
+			 } else if(deleteMsg != null || deleteMsg > 0){
+				 alert("삭제에 성공하였습니다.");
+			 } else {
+				 alert("삭제에 실패하였습니다.");
+			 }
+			 /* 삭제 후 메세지 출력 끝 */
+			 
+			 if(!updateMsg){ 
+				 console.log("조회");
+			 } else if(updateMsg != null || updateMsg > 0){
+				 alert("수정에 성공하였습니다.");
+			 } else {
+				 alert("수정에 실패하였습니다.");
+			 }
+			 /* 수정 후 메세지 출력 끝 */
+			 
+				
+			 /* 입력 후 메세지 출력 끝 */
+		 
+		 
+			/* 삭제 시작 */
 		    $(".driveDeleteBtn").click(function(event) {
-		        const deleteChkMsg = confirm("삭제하면 복구 불가능합니다. 정말 삭제하시겠어요?");
-		        var no = $(this).closest('.card').find('#noVal').text();
-
-		        if (deleteChkMsg) {
-		        	//event.preventDefault();
-		            $.ajax({
-		                url: '/driveInfoDelete/' + no,
-		                type: 'DELETE',
-		                success: function(data) {
-		                    console.log(data); // 삭제 성공 시 서버에서 반환한 메시지 출력
-		                    if (data > 0) { // 성공적인 DELETE 요청을 받았을 때
-		                        window.location.href = '/driveInfo'; // 리다이렉트할 URL로 이동
-		                    } else {
-		                    	alert("삭제되었습니다.");
-		                    }
-		                },
-		                error: function(xhr, status, error) {
-		                    console.error(xhr.responseText); // 오류 발생 시 서버에서 반환한 오류 메시지 출력
-		                    // 원하는 동작 수행
-		                }
-		            });
-		        } else {
-		            console.log("삭제 취소");
-		            event.preventDefault(); // 기본 이벤트 막기 (페이지 새로고침 등)
-		        }
+		    	event.preventDefault();
+				if(confirm("삭제하면 복구 불가능합니다. 정말 삭제하시겠어요?")) {
+					var no = $(this).closest('.card').find('#noVal').text(); // 클릭된 일지의 no 값 가져오기
+			        var carNumber = $(this).closest('.card').find('#carNumber').text(); // 클릭된 일자의 carNumber 가져오기
+			        $("#noValInput").val(no); // form에 값 설정해주기
+					$("#carNumberInput").val(carNumber);
+					
+				     $('#driveInfofm').attr('action', '/driveInfoDelete');
+				     $('#driveInfofm').submit();
+					
+				} else {
+					return;
+					console.log("삭제취소");
+				}
+		        
 		    });
-
+		    /* 삭제 끝 */
+		  
+			/* 수정 시작 */
 		    $(".driveUpdateBtn").click(function(event) {
 		        console.log("driveUpdateBtn 클릭");
 		        var no = $(this).closest('.card').find('#noVal').text();
-		        console.log(no);
-		        $("#noVal").val(no);
-
-		        $('#driveInfofm').attr('method', 'POST');
+		        var carNumber = $(this).closest('.card').find('#carNumber').text();
+		        $("#noValInput").val(no); // form에 값 설정해주기
+				$("#carNumberInput").val(carNumber);
+		        
 		        $('#driveInfofm').attr('action', '/driveInfoUpdate');
-
 		        $('#driveInfofm').submit();
 		    })
+		    /* 수정 끝 */
+		    
+		    
+		    $("#newInsertBtn").click(function(){
+		    	
+		    	$('#driveInfofm').attr('action', '/driveInfoInsert');
+		        $('#driveInfofm').submit();
+		    })
+		    
 		});
+	 
 
 	
 	</script>
 	
 	
-	 <form id="driveInfofm">
+	 <form id="driveInfofm" method="POST">
 						 <!-- 수정으로 데이터를 재전송하기 위한 폼 -->
-	          		  <input type="hidden" name="no" id="noVal" value="">
-	          		 <!--  <input type="hidden" th:value="${driveInfo.totalKm}" name="totalKm">
-	          		  <input type="hidden" th:value="${driveInfo.todayIncome}" name="todayIncome">
-	          		  <input type="hidden" th:value="${driveInfo.todayFuel}" name="todayFuel">
-	          		  <input type="hidden" th:value="${driveInfo.netProfit}" name="netProfit">
-	          		  <input type="hidden" th:value="${driveInfo.todayMemo}" name="todayMemo"> -->
+	          		  <input type="hidden" name="no" id="noValInput">
+	          		  <input type="text" name="carNumber" id="carNumberInput" th:value="${insertCarNumber}">
+	          		  <input type="hidden" name="totalKm" id="totalKmInput">
+	          		  <input type="hidden" name="todayIncome" id="todayIncomeInput">
+	          		  <input type="hidden" name="todayFuel" id="todayFuelInput">
+	          		  <input type="hidden" name="netProfit" id="netProfitInput">
+	          		  <input type="hidden" name="todayMemo" id="todayMemoInput">
 	
 
 	    <div th:if="${!#lists.isEmpty(list)}" th:each="driveInfo, iterStat : ${list}" class="mb-4" th:classappend="${iterStat.index < 1} ? 'driveInfoOne' : ''">
 	        <div class="card text-center" style="border: 3px solid #c7c7c7;">
 	            <div class="card-header">
-	              <h5 class="card-title">2024년 3월 2일(토)</h5>
+	              <h5 class="card-title" th:text="${driveInfo.registTime}"></h5>
 	            </div>
 	            <div class="card-body">
 	                <table class="table">
 	                    <thead>
 	                        <tr>
 	                            <th scope="col" colspan="2">
-	                            	<span th:text="${driveInfo.carNumber}"></span> <br>
-	                                <span th:text="${driveInfo.no}" id="noVal"></span>번째 운행기록
+	                            	<span th:text="${driveInfo.carNumber}" id="carNumber"></span> <br>
+	                                <span th:text="${driveInfo.carInfoNo}"></span>번째 운행기록
+	                                <span th:text="${driveInfo.no}" id="noVal"></span>
 	                            </th>
 	                        </tr>
 	                    </thead>
@@ -121,7 +152,7 @@
         <div class="card-body">
         	<span>
 	        	<h5 th:if="${#lists.isEmpty(list)}">오늘 입력된 운행 일지가 없습니다. <br> 새로운 운행 일지를 작성하시겠어요?</h5>
-	            <button class="btn btn-primary" onclick="window.location.href='/driveInfoInsert'">새로운 운행 일지 작성하기</button>
+	            <button class="btn btn-primary" id="newInsertBtn">새로운 운행 일지 작성하기</button>
 
         	</span>
            	 <button class="btn btn-primary" id="driveInserBtn">다른날짜 조회하기</button> <!-- list가 비어있든, 없든 표출 -->

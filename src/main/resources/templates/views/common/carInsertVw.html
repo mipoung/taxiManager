@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+    <div layout:fragment="content">
+    
+   		<script th:inline="javascript">
+   			$(function(){
+   				$("#carInsertBtn").click(function(){
+   	   				alert("차량등록");
+   	   				
+   	   			})
+   	   				
+   				
+   				
+   			})
+   		
+   		
+   			
+   		</script>
+    
+	    <div class="card">
+			  <div class="card-body">
+					
+					
+					<form id="carInsertFm" method="post" action="/carInsert">
+					 	<div class="mb-3">
+						  <label for="formGroupExampleInput" class="form-label">차량번호</label>
+						  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="차량번호를 입력해주세요" name="carNumber">
+						</div>
+						<div class="mb-3">
+						  <label for="formGroupExampleInput" class="form-label">차량 이름(닉네임)</label>
+						  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="차량번호를 입력해주세요" name="carName">
+						</div>
+						
+						<div class="form-check">
+						<h3>차량타입</h3>
+						  <input class="form-check-input" type="radio" name="type" value="personal" checked>
+						  <label class="form-check-label" for="personal">개인용 승용차</label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="type" value="taxi">
+						  <label class="form-check-label" for="taxi">택시</label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="type" value="truck">
+						  <label class="form-check-label" for="truck">화물</label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="type" value="motorcycle">
+						  <label class="form-check-label" for="motorcycle">오토바이</label>
+						</div>
+	          		  
+			                <button class="btn btn-primary" id="carInsertBtn">차량 등록하기</button>
+					</form>
+					
+					
+			  </div>
+		</div>
+    
+    
+        
+    </div>
+
+</html>
